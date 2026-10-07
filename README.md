@@ -1,7 +1,5 @@
 ![Journal Skill Creator — Journal guidelines. Reusable writing skills.](docs/assets/banner.gif)
 
-# Journal Skill Creator
-
 Create a reusable writing and manuscript-review skill for a named academic journal, grounded in its official author instructions and observed writing conventions.
 
 The creator produces a separate journal skill with dated sources, article-type requirements, writing guidance, a scientific review rubric, paragraph scores and review dashboard assets. It distinguishes journal rules from observed conventions, records unavailable evidence and avoids invented study results or citations.
