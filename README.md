@@ -1,3 +1,5 @@
+![Journal Skill Creator — Journal guidelines. Reusable writing skills.](docs/assets/banner.png)
+
 # Journal Skill Creator
 
 Create a reusable writing and manuscript-review skill for a named academic journal, grounded in its official author instructions and observed writing conventions.
@@ -79,7 +81,7 @@ Some links in the review templates refer to `journal-requirements.md` and `writi
 ## Publishing and updates
 
 1. Create a GitHub repository named `journal-skill-creator` (or another name).
-2. Upload the contents of this source package to its root: README, LICENSE, .gitignore and skills/. Keep the skill folder intact.
+2. Upload the contents of this source package to its root: README, LICENSE, .gitignore, docs/ and skills/. Keep the skill folder intact.
 3. Replace OWNER/REPO in the installation example with the actual repository details; adjust `main` if using a different branch.
 4. Create a release, such as `v0.1.0`, and attach the separately supplied `journal-skill-creator.zip` for Claude chat users.
 5. Share the repository URL. For updates, publish a new release ZIP; manually copied or uploaded skills need reinstalling/re-uploading.
