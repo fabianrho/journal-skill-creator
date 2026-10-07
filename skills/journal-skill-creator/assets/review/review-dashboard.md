@@ -24,7 +24,7 @@ Use a single assessment dataset for all views. The asset is a reusable layout, n
 
 ## Dashboard composition
 
-- **Header:** identify the journal, article type, section, manuscript version and review date.
+- **Header:** identify the journal, article type, section, manuscript version, review date and requirements access date with its basis, e.g. “Requirements accessed 2026-10-07 (bundled)”. Text-only scorecards carry the same line.
 - **Three overview boxes:** place exactly these three summary cards above the paragraph scorecard, in this order. Arrange them side by side on desktop and stack them on narrow screens.
   1. **Editorial assessment:** a prominent score out of 10 for the reviewed text's prose and argument, a ten-segment visual, and a short reason. Label it “Qualitative editorial judgement”; it is not a paragraph-score average, evidence-complete readiness score, or acceptance probability. Keep any provisional or blocked evidence status visible. When there is insufficient text to judge, show “Not assessed” and the reason instead of inventing a score.
   2. **Length:** the measured word count against the verified applicable journal limit, a progress indicator, and “Within limit” or “Over limit”; name the section or counted scope and exclusions. For a full manuscript, use the applicable main-text count. If the limit is unverified or no single limit applies, show the count and “Limit unverified” or “No single applicable limit”, with no percentage or pass label. Never reuse example counts or another journal's limits.

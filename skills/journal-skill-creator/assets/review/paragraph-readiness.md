@@ -6,13 +6,13 @@ Read [critical-review.md](critical-review.md) before assigning scores. Version 1
 
 ## Establish scope and sources
 
-Identify the article type, manuscript version, section, and available study evidence. Use the default article type declared in SKILL.md only when unspecified. Read the applicable official sections through [journal-requirements.md](journal-requirements.md), verify live instructions for readiness checks, and consult [writing-style.md](writing-style.md). Other article types retain the scoring dimensions but use their own requirements and comparable published articles.
+Identify the article type, manuscript version, section, and available study evidence. Use the default article type declared in SKILL.md only when unspecified. Read the applicable official sections in their local captures through [journal-requirements.md](journal-requirements.md) and consult [writing-style.md](writing-style.md). The bundled captures are the default basis, including for readiness checks; browse only when the user asks to refresh the requirements. State the requirements access date in every review and scorecard. Other article types retain the scoring dimensions but use their own requirements and comparable published articles.
 
 Assign stable IDs such as Introduction P1 or Methods P3, with a short opening phrase and file/page/line location where available. Preserve paragraph boundaries; score abstract subsections and individual key points as labelled units. Read neighbouring paragraphs when available. Do not penalize a paragraph for information appropriately supplied elsewhere, or claim that an unseen section is missing. Apply opening-sentence requirements only to section openings. Track section word limits and manuscript-wide obligations once in a separate checklist.
 
 For every judgement identify its basis:
 
-- **Requirement:** explicit applicable journal instruction, with URL and section.
+- **Requirement:** explicit applicable journal instruction, quoted from its local capture, with URL and section.
 - **Recommendation:** official recommendation, retaining its stated strength.
 - **Observed style:** inspected comparable article and section; an example, not a rule.
 - **Editorial judgement:** scientific reasoning or clarity advice; explain the effect on the reader.
@@ -37,7 +37,7 @@ For each rated dimension, earned points = weight × rating / 4. Total = 100 × s
 
 Use **N/A** only when a dimension truly does not apply, with a reason; exclude its weight. Use **U (unverified)** when evidence or context needed to judge it is unavailable; retain its weight. Do not confuse lack of access with a demonstrated defect. If any dimension is U, report a provisional interval: lower bound gives unknown dimensions zero points, upper bound gives them full points. Show assessed weight as coverage. Do not normalize the known dimensions into an apparently complete high score. If no dimension is assessable, say so instead of assigning a number. Do not describe this interval as statistical uncertainty.
 
-For partial context, rate a dimension only if all material criteria within the declared review scope can be judged. In an explicitly isolated-paragraph review, internal flow may be rated while neighbouring transitions are listed as outside scope; do not count that as full-section coverage. If missing context is necessary to judge the paragraph's purpose, use U. If live official verification fails, J may be rated against complete dated snapshots when applicable instructions are clear, but label J as snapshot-based and the overall verdict Provisional; use U if the relevant instruction itself cannot be established. Lack of access to study evidence alone never establishes an unsupported-inference blocker; that requires an identifiable mismatch between the inference and the supplied evidence or study design.
+For partial context, rate a dimension only if all material criteria within the declared review scope can be judged. In an explicitly isolated-paragraph review, internal flow may be rated while neighbouring transitions are listed as outside scope; do not count that as full-section coverage. If missing context is necessary to judge the paragraph's purpose, use U. Rules in the bundled dated captures count as verified: rate J against them normally and cite the access date. Use U for J only when the relevant instruction is genuinely missing from the captures, was inaccessible when they were made, or is an unresolved conflict. Lack of access to study evidence alone never establishes an unsupported-inference blocker; that requires an identifiable mismatch between the inference and the supplied evidence or study design.
 
 Readiness bands for fully assessed paragraphs:
 
@@ -48,7 +48,7 @@ Readiness bands for fully assessed paragraphs:
 | 5.0–7.4 | 50–74 | Substantive revision |
 | 0.0–4.9 | 0–49 | Major revision |
 
-The numeric band never overrides a **blocker**: a demonstrated central unsupported inference, contradiction, unresolved placeholder, or mandatory paragraph requirement violation. Show the score but label the verdict **Blocked**, with the exact reason. Missing evidence access or unchecked current rules instead makes the verdict **Provisional**; if a demonstrated blocker also exists, show **Blocked; assessment incomplete**. Even 10.0/10 does not certify the manuscript or predict acceptance.
+The numeric band never overrides a **blocker**: a demonstrated central unsupported inference, contradiction, unresolved placeholder, or mandatory paragraph requirement violation. Show the score but label the verdict **Blocked**, with the exact reason. Missing evidence access or a rule genuinely missing from the bundled captures instead makes the verdict **Provisional**; if a demonstrated blocker also exists, show **Blocked; assessment incomplete**. Even 10.0/10 does not certify the manuscript or predict acceptance.
 
 ## Presentation
 
