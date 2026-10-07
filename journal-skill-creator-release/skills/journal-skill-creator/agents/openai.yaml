@@ -1,0 +1,3 @@
+interface:
+  display_name: "Journal Skill Creator"
+  short_description: "Create journal writing skills with scores and dashboards"

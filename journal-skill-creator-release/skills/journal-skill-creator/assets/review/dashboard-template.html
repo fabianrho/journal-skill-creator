@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Journal review dashboard</title>
+<style>
+:root{color-scheme:light dark;--background:#f7f8fa;--foreground:#182331;--muted:#e5e9ef;--subtle:#596779;--surface:#fff;--border:#d5dde7;--viz-series-1:#26766b}
+@media(prefers-color-scheme:dark){:root{--background:#121820;--foreground:#edf2f7;--muted:#303c49;--subtle:#adbac8;--surface:#1c2632;--border:#425060;--viz-series-1:#67c5b5}}
+*{box-sizing:border-box}body{margin:0;padding:24px;background:var(--background);color:var(--foreground);font:15px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+#journal-review{max-width:1100px;margin:auto;overflow-wrap:anywhere}h2{font-size:26px;line-height:1.25;margin:8px 0 20px}h3{font-size:18px;margin:20px 0 10px}button,select{font:inherit;color:inherit}button,summary,select{cursor:pointer}button:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--viz-series-1);outline-offset:3px}
+a{color:var(--viz-series-1)}.text-small{font-size:12px}.text-muted{color:var(--subtle)}.text-nowrap{white-space:nowrap}.viz-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}.viz-stat-value{font-size:24px;line-height:1.3;font-weight:600;margin-top:12px}.progress{height:7px;background:var(--muted);margin-top:12px;border-radius:4px;overflow:hidden}.progress-bar{height:100%;background:var(--viz-series-1)}.nav{display:flex;gap:8px;border-bottom:1px solid var(--border);padding-bottom:12px;margin:20px 0}.nav-link,.btn{border:1px solid transparent;border-radius:6px;padding:8px 12px;background:transparent}.nav-link.active{background:var(--foreground);color:var(--background)}.nav-link:hover:not(.active),.btn:hover{background:var(--muted)}.viz-controls{margin:16px 0}.form-label{display:flex;align-items:center;gap:12px}.form-select{min-width:0;max-width:100%;padding:8px;border:1px solid var(--border);border-radius:6px;background:var(--surface)}.table-responsive{max-width:100%;overflow-x:auto}.table{min-width:620px;width:100%;border-collapse:collapse;text-align:left}.table th,.table td{padding:10px 8px;border-bottom:1px solid var(--border);vertical-align:top}.table th{font-size:12px;color:var(--subtle);font-weight:600}.table tr[data-selected="true"]{background:color-mix(in srgb,var(--viz-series-1) 10%,transparent)}details{border-top:1px solid var(--border);padding-top:12px}summary{font-weight:600}
+@media(max-width:600px){body{padding:14px}.viz-grid{grid-template-columns:1fr}.card{padding:16px}.nav{gap:2px}.nav-link{padding:8px}.form-label{align-items:flex-start;flex-direction:column}#journal-review .review-heading{padding-right:0}}
+</style>
+</head>
+<body>
+<div id="journal-review">
+  <div class="review-heading"><div id="jr-meta" class="text-small text-muted"></div><h2 id="jr-title"></h2></div>
+  <div class="viz-grid" id="jr-summary"></div>
+  <div class="text-small text-muted summary-note">Editorial score is separate from the paragraph rubric: no score average, readiness certification or acceptance prediction.</div>
+  <div class="nav nav-pills" role="tablist" aria-label="Review views">
+    <button class="nav-link active" id="jr-tab-score" role="tab" aria-controls="jr-score" aria-selected="true" type="button">Paragraphs</button>
+    <button class="nav-link" id="jr-tab-actions" role="tab" aria-controls="jr-actions" aria-selected="false" type="button">Actions</button>
+    <button class="nav-link" id="jr-tab-sources" role="tab" aria-controls="jr-sources" aria-selected="false" type="button">Sources</button>
+  </div>
+  <div id="jr-score" role="tabpanel" aria-labelledby="jr-tab-score">
+    <div class="viz-controls"><label class="form-label">Section<select class="form-select" id="jr-section"></select></label></div>
+    <div class="table-responsive"><table class="table table-sm" aria-label="Selectable paragraph scorecard"><thead><tr><th>Paragraph &amp; purpose</th><th>C</th><th>E</th><th>J</th><th>F</th><th>L</th><th>Score / 10 · verdict</th></tr></thead><tbody id="jr-overview"></tbody></table></div>
+    <div class="text-small score-legend">C Content 25% · E Evidence 30% · J Journal 20% · F Flow 10% · L Language 15%<br>0 fails · 1 major · 2 substantive · 3 minor · 4 no material issue · U unverified · N/A not applicable</div>
+    <div id="jr-selected" aria-live="polite"></div>
+  </div>
+  <div id="jr-actions" role="tabpanel" aria-labelledby="jr-tab-actions" hidden><div id="jr-action-list"></div></div>
+  <div id="jr-sources" role="tabpanel" aria-labelledby="jr-tab-sources" hidden>
+    <h3>Review coverage</h3><dl class="facts" id="jr-coverage"></dl>
+    <h3>Section and consistency checks</h3>
+    <div class="table-responsive"><table class="table table-sm"><thead><tr><th>Check</th><th>Observed</th><th>Status / next step</th></tr></thead><tbody id="jr-checks"></tbody></table></div>
+    <div class="text-small text-muted" id="jr-count-method"></div>
+    <h3>Source register</h3><dl class="facts" id="jr-register"></dl>
+    <details><summary class="cursor-interaction">Rubric v1.1 · calculation &amp; anchors</summary>
+      <div class="table-responsive"><table class="table table-sm"><thead><tr><th>Dimension</th><th>Weight</th><th>Full-credit criterion</th></tr></thead><tbody>
+        <tr><td>C · Content</td><td>25%</td><td>Fulfils the paragraph's purpose and scientific role</td></tr>
+        <tr><td>E · Evidence</td><td>30%</td><td>Central claims trace to inspected evidence; interpretation fits the design</td></tr>
+        <tr><td>J · Journal</td><td>20%</td><td>Meets applicable paragraph reporting requirements</td></tr>
+        <tr><td>F · Flow</td><td>10%</td><td>Coherent purpose and logical sequence</td></tr>
+        <tr><td>L · Language</td><td>15%</td><td>Precise, concise academic wording</td></tr>
+      </tbody></table></div>
+      <dl class="facts"><dt>Anchors / 4</dt><dd>4 no material issue; 3 minor revision; 2 substantive revision; 1 major reconstruction; 0 fails its purpose.</dd><dt>Calculation</dt><dd>100 × sum(weight × rating / 4) / applicable weight; round once to a whole point out of 100, then divide by 10.</dd><dt>Unknown (U)</dt><dd>Retain unknown weight. Interval endpoints assign it zero or full credit; coverage shows assessed applicable weight. This is not a statistical confidence interval. With no assessed dimensions, show Not assessed.</dd><dt>Not applicable</dt><dd>N/A excludes that dimension's weight; explain why it does not apply.</dd><dt>Bands</dt><dd>9.0–10 ready within assessed scope; 7.5–8.9 minor revision; 5.0–7.4 substantive revision; below 5.0 major revision.</dd><dt>Blocker</dt><dd>A demonstrated central contradiction or unsupported inference overrides the numeric band. Unavailable evidence alone is provisional, never a blocker.</dd><dt>Reassessment</dt><dd>No manuscript average. Selection does not revise text or change ratings. Higher scores require reassessment after changes. Apply the full scientific checks in the local rubric before assigning full credit.</dd></dl>
+    </details>
+  </div>
+</div>
+<style>
+#journal-review .review-heading{padding-right:90px;margin-bottom:18px}
+#journal-review .summary-copy{margin:12px 0 8px}
+#journal-review .summary-note{margin:12px 0 20px}
+#journal-review .score-legend{margin:12px 0 20px}
+#journal-review .heat-cell{display:inline-flex;align-items:center;justify-content:center;min-width:24px;min-height:26px;background:color-mix(in srgb,var(--viz-series-1) var(--level),transparent);color:var(--foreground);font-variant-numeric:tabular-nums}
+#journal-review .paragraph-map{display:grid;grid-template-columns:repeat(auto-fit,minmax(48px,1fr));gap:8px;margin:14px 0}
+#journal-review .facts{display:grid;grid-template-columns:minmax(95px,0.26fr) minmax(0,1fr);gap:9px 16px;margin:14px 0 22px}
+#journal-review dt{font-weight:500}#journal-review dd{margin:0;overflow-wrap:anywhere}
+#journal-review .selected-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:start;margin-top:20px}
+#journal-review .score-value{font-variant-numeric:tabular-nums;font-weight:500}
+#journal-review .ten-bar{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;width:180px;max-width:100%;height:7px;margin-top:8px}
+#journal-review .ten-bar span{background:var(--muted)}#journal-review .ten-bar i{display:block;height:100%;background:var(--viz-series-1)}
+#journal-review .rating-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:20px 0}
+#journal-review .rating-mark{height:5px;display:flex;gap:3px;margin-top:7px}#journal-review .rating-mark span{flex:1;background:var(--muted)}#journal-review .rating-mark .on{background:var(--viz-series-1)}
+#journal-review .review-detail{margin:15px 0}#journal-review .review-detail li{margin:8px 0}
+#journal-review .overview-disclosure{margin-top:22px}#journal-review .action-item{margin:22px 0 26px}#journal-review .action-title{font-weight:500;margin-bottom:8px}
+#journal-review [hidden]{display:none!important}
+@media(max-width:480px){#journal-review .review-heading{padding-right:0}#journal-review .facts{grid-template-columns:1fr;gap:5px}#journal-review dd{margin-bottom:9px}#journal-review .rating-row{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}}
+</style>
+<script type="application/json" id="jr-data">__REVIEW_DATA_JSON__</script>
+<script>
+(() => {
+const root=document.getElementById('journal-review');
+const data=JSON.parse(root.parentNode.querySelector('#jr-data').textContent);
+const units=data.paragraphs, weights=[25,30,20,10,15], dims=['C','E','J','F','L'], names=['Content','Evidence','Journal','Flow','Language'];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const put=(id,html)=>root.querySelector('#jr-'+id).innerHTML=html;
+const facts=pairs=>pairs.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('');
+function calc(u){let earned=0,unknown=0,applicable=0;u.r.forEach((v,i)=>{if(v==='N/A')return;applicable+=weights[i];if(v==='U')unknown+=weights[i];else earned+=weights[i]*v/4;});const assessed=applicable-unknown;return {low:assessed?Math.round(100*earned/applicable)/10:null,high:assessed?Math.round(100*(earned+unknown)/applicable)/10:null,coverage:applicable?Math.round(100*assessed/applicable):0,unknown,applicable,assessed};}
+function score(u){const s=calc(u);return !s.assessed?'Not assessed':s.unknown?`${s.low.toFixed(1)}–${s.high.toFixed(1)}`:s.low.toFixed(1);}
+function verdict(u){const s=calc(u),incomplete=Boolean(s.unknown||u.provisional);if(u.blocker)return incomplete?'Blocked; assessment incomplete':'Blocked';if(!s.assessed)return 'Not assessed';if(incomplete)return 'Provisional';return s.low>=9?'Ready within assessed scope':s.low>=7.5?'Minor revision':s.low>=5?'Substantive revision':'Major revision';}
+const tenBar=(v,label)=>`<div class="ten-bar" role="img" aria-label="${esc(label)}">${Array.from({length:10},(_,i)=>`<span><i style="width:${Math.min(1,Math.max(0,v-i))*100}%"></i></span>`).join('')}</div>`;
+document.title=data.title;put('title',esc(data.title));put('meta',esc([data.journal,data.articleType,data.scope,data.version,data.reviewDate].join(' · ')));
+const ed=data.editorial,len=data.length,focus=data.focus;
+const measured=typeof len.count==='number', verified=len.limitStatus==='verified'&&typeof len.limit==='number'&&len.limit>0;
+const comparable=measured&&verified,percent=comparable?100*len.count/len.limit:null;
+const lengthValue=measured?`${len.count.toLocaleString('en-US')} <span class="text-small">${verified?'/ '+len.limit.toLocaleString('en-US')+' ':''}words</span>`:'Not counted';
+const lengthStatus=comparable?(len.count<=len.limit?'Within limit':`Over limit · ${(len.count-len.limit).toLocaleString('en-US')} words (${Math.round(percent-100)}%)`):!measured?'Count unverified':len.limitStatus==='none'?'No single applicable limit':'Limit unverified';
+put('summary',`<div class="card"><div>Editorial assessment</div><div class="viz-stat-value">${ed.score===null?'Not assessed':Number(ed.score).toFixed(1)+' / 10'}</div>${ed.score===null?'':tenBar(ed.score,'Qualitative editorial assessment: '+ed.score+' out of 10')}<div class="summary-copy">${esc(ed.reason)}</div><div class="text-small">Qualitative editorial judgement · prose and argument</div><div class="text-small">${esc(ed.status)}</div></div>
+<div class="card"><div>Length</div><div class="viz-stat-value">${lengthValue}</div>${comparable?`<div class="progress" role="progressbar" aria-label="Word limit used" aria-valuenow="${Math.min(100,Math.round(percent))}" aria-valuemin="0" aria-valuemax="100" aria-valuetext="${Math.round(percent)} percent of the limit"><div class="progress-bar" style="width:${Math.min(100,percent)}%"></div></div>`:''}<div class="summary-copy">${lengthStatus}</div><div class="text-small">${esc(len.scope)} · ${esc(len.exclusions)}</div><div class="text-small">${esc(len.source)}</div></div>
+<div class="card"><div>Revision focus</div><div class="viz-stat-value">${esc(focus.ids.length?focus.ids.join(' → '):'No material revision')}</div><div class="summary-copy">${esc(focus.action)}</div><div class="text-small">${esc(focus.status)}</div><div class="text-small">${esc(focus.workType)}</div></div>`);
+put('coverage',facts(data.coverage));put('count-method',esc(len.method));
+put('checks',data.checks.length?data.checks.map(c=>`<tr><td>${esc(c.check)}</td><td>${esc(c.observed)}</td><td>${esc(c.status)}</td></tr>`).join(''):'<tr><td colspan="3">No section checks recorded within this review scope.</td></tr>');
+put('register',data.sources.map(s=>`<dt>${esc(s.id)} · ${esc(s.basis)}</dt><dd>${s.url&&/^https?:\/\//i.test(s.url)?`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>`:esc(s.title)}. ${esc(s.location)} · ${esc(s.access)} · ${esc(s.limitations)}</dd>`).join(''));
+put('action-list',data.actions.length?data.actions.map((a,i)=>`<div class="action-item"><div class="action-title">${i+1} · ${esc(a.title)}</div><div class="text-small text-muted">${esc(a.location)} · ${esc(a.workType)}</div><dl class="facts">${facts([['Action',a.action],['Complete when',a.completeWhen],['Evidence boundary',a.evidenceBoundary]])}</dl></div>`).join(''):'<p>No material revision identified within the assessed scope.</p>');
+const sections=['All paragraphs',...new Set(units.map(u=>u.section))],select=root.querySelector('#jr-section');
+select.innerHTML=sections.map(s=>`<option>${esc(s)}</option>`).join('');
+let selected=focus.ids.find(id=>units.some(u=>u.id===id))||units[0]?.id;
+let currentSection=units.find(u=>u.id===selected)?.section||'All paragraphs';
+function restore(saved){if(saved?.reviewId!==data.reviewId)return;const u=units.find(u=>u.id===saved.selected);if(!u)return;selected=u.id;currentSection=sections.includes(saved.section)&&(saved.section==='All paragraphs'||saved.section===u.section)?saved.section:u.section;}
+restore(window.openai?.widgetState?.privateContent);
+function persist(){const u=units.find(u=>u.id===selected);window.openai?.setWidgetState?.({modelContent:{review:data.title,selectedParagraph:selected,score:u?score(u):null,verdict:u?verdict(u):null},privateContent:{reviewId:data.reviewId,selected,section:currentSection}})?.catch(()=>{});}
+function render(){select.value=currentSection;const u=units.find(x=>x.id===selected),group=units.filter(x=>currentSection==='All paragraphs'||x.section===currentSection);
+put('overview',group.map(x=>`<tr data-selected="${x.id===selected}"><td><button class="btn btn-ghost" type="button" data-unit="${esc(x.id)}" aria-pressed="${x.id===selected}">${x.id===selected?'→ ':''}${esc(x.id)}</button><div>${esc(x.purpose)}</div></td>${x.r.map((v,i)=>`<td><span class="heat-cell" style="--level:${typeof v==='number'?8+v*8:0}%" aria-label="${names[i]} ${typeof v==='number'?v+' out of 4':v==='U'?'unverified':'not applicable'}">${v}</span></td>`).join('')}<td><span class="text-nowrap">${score(x)}</span><div class="text-small">${esc(verdict(x))}</div><div class="text-small text-muted">${calc(x).coverage}% assessed</div></td></tr>`).join(''));
+if(!u){put('selected','<p>No paragraphs assessed.</p>');return;}const s=calc(u);
+put('selected',`<div class="selected-top"><div><h3>${esc(u.id+' · '+u.purpose)}</h3><div class="text-small text-muted">${esc(u.location)} · Opening: “${esc(u.opening)}…”</div></div><div><div class="score-value">${score(u)}${s.assessed?' / 10':''}</div>${s.assessed&&!s.unknown?tenBar(s.low,'Paragraph score: '+s.low+' out of 10'):''}<div class="text-small">${esc(verdict(u))}</div><div class="text-small text-muted">${s.coverage}% assessed weight</div></div></div>
+<div class="rating-row">${u.r.map((v,i)=>`<div><div>${dims[i]} · ${typeof v==='number'?v+'/4':v}</div><div class="text-small text-muted">${names[i]}</div><div class="rating-mark" aria-hidden="true">${Array.from({length:4},(_,j)=>`<span class="${typeof v==='number'&&j<v?'on':''}"></span>`).join('')}</div></div>`).join('')}</div>
+<dl class="facts">${facts([...(u.blocker?[['Blocker',u.blocker]]:[]),...(u.provisional?[['Assessment limitation',u.provisional]]:[]),['Next action',u.action],['Work type',u.workType],['Evidence needed',u.evidenceNeeded],['Score can improve',u.improveWhen]])}</dl>
+<details class="review-detail" open><summary class="cursor-interaction">Why this score</summary><ul>${dims.map((d,i)=>`<li><strong>${d} · ${typeof u.r[i]==='number'?u.r[i]+'/4':u.r[i]}</strong> — ${esc(u.reasons[d])}</li>`).join('')}</ul></details>
+<details class="review-detail"><summary class="cursor-interaction">Calculation and deductions</summary><div class="table-responsive"><table class="table table-sm"><thead><tr><th>Dimension</th><th>Applicable weight</th><th>Earned / 100</th><th>Deducted / 100</th></tr></thead><tbody>${u.r.map((v,i)=>{const w=s.applicable?100*weights[i]/s.applicable:0;return `<tr><td>${dims[i]}</td><td>${v==='N/A'?'Excluded':w.toFixed(2)}</td><td>${v==='N/A'?'N/A':v==='U'?'0–'+w.toFixed(2):(w*v/4).toFixed(2)}</td><td>${v==='N/A'?'N/A':v==='U'?'Unknown':(w*(4-v)/4).toFixed(2)}</td></tr>`;}).join('')}</tbody></table></div><div class="text-small">${!s.assessed?'No dimension assessed.':s.unknown?'Provisional interval; unknown weight retained.':'Numeric ratings complete within the declared scope; see any assessment limitation above.'} N/A weight excluded. Rounded once on the 100-point scale. Each deduction addresses a distinct dimension.</div></details>`);
+}
+root.addEventListener('click',e=>{const b=e.target.closest('[data-unit]');if(b){selected=b.dataset.unit;render();persist();}});
+select.addEventListener('change',()=>{currentSection=select.value;if(currentSection!=='All paragraphs')selected=units.find(u=>u.section===currentSection).id;render();persist();});
+window.addEventListener('openai:set_globals',e=>{restore(e.detail?.globals?.widgetState?.privateContent);render();});
+const tabs=[...root.querySelectorAll('[role="tab"]')];
+function activateTab(tab){tabs.forEach(t=>{const active=t===tab;t.classList.toggle('active',active);t.setAttribute('aria-selected',String(active));t.tabIndex=active?0:-1;root.querySelector('#'+t.getAttribute('aria-controls')).hidden=!active;});}
+tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>activateTab(tab));tab.addEventListener('keydown',e=>{let next;if(e.key==='ArrowRight')next=(i+1)%tabs.length;else if(e.key==='ArrowLeft')next=(i+tabs.length-1)%tabs.length;else if(e.key==='Home')next=0;else if(e.key==='End')next=tabs.length-1;else return;e.preventDefault();tabs[next].focus();activateTab(tabs[next]);});});
+activateTab(tabs[0]);
+render();root.dataset.unitCount=String(units.length);root.dataset.assessment=JSON.stringify(units.map(u=>({id:u.id,r:u.r,score:score(u),verdict:verdict(u),...calc(u)})));
+})();
+</script>
+
+</body>
+</html>
