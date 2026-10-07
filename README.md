@@ -1,8 +1,8 @@
 ![Journal Skill Creator — Journal guidelines. Reusable writing skills.](docs/assets/banner.gif)
 
-Create a reusable writing and manuscript-review skill for a named academic journal, grounded in its official author instructions and observed writing conventions.
+Create a reusable writing and manuscript-review skill for any academic journal, grounded in its official author instructions and writing conventions.
 
-The creator produces a separate journal skill with dated sources, article-type requirements, writing guidance, a scientific review rubric, paragraph scores and review dashboard assets. It distinguishes journal rules from observed conventions, records unavailable evidence and avoids invented study results or citations.
+The creator produces a separate journal skill with sources, article-type requirements, writing guidance, a scientific review rubric, paragraph scores and a review dashboard. It distinguishes explicit journal rules from conventions, records unavailable evidence and avoids invented study results or citations.
 
 ## Install
 
@@ -10,10 +10,10 @@ Download this repository using GitHub's **Code → Download ZIP**, then extract 
 
 ### Codex
 
-Ask Codex (replace OWNER and REPO with this repository's actual location):
+Ask Codex:
 
 ```text
-$skill-installer install the skill from https://github.com/OWNER/REPO/tree/main/skills/journal-skill-creator
+$skill-installer install the skill from https://github.com/fabianrho/journal-skill-creator/tree/main/skills/journal-skill-creator
 ```
 
 For manual installation, copy `skills/journal-skill-creator` into `~/.agents/skills/`. Restart Codex if the skill does not appear.
@@ -36,7 +36,7 @@ focusing on Original Research. Save the resulting skill in .claude/skills/.
 Research the current official author instructions and record source limitations.
 ```
 
-### Claude chat
+### Claude Desktop
 
 Download `journal-skill-creator.zip` from the repository's Releases page once published. In Claude, open **Customize → Skills → + → Create skill → Upload a skill**, upload the ZIP and enable it. Code execution must be available and enabled.
 
@@ -85,10 +85,6 @@ Some links in the review templates refer to `journal-requirements.md` and `writi
 5. Share the repository URL. For updates, publish a new release ZIP; manually copied or uploaded skills need reinstalling/re-uploading.
 
 Do not upload the source-package ZIP as the Claude skill: use the dedicated skill ZIP whose top-level folder is `journal-skill-creator/`.
-
-## Verification
-
-See [VALIDATION.md](VALIDATION.md) for the checks performed on this release preparation and their limits.
 
 ## Documentation
 
