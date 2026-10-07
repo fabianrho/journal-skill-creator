@@ -18,7 +18,7 @@ def validate(d):
     def number(value):
         return type(value) in (int, float) and float('-inf') < value < float('inf')
 
-    strings(d, 'reviewId title journal articleType scope version reviewDate', 'review')
+    strings(d, 'reviewId title journal articleType scope version reviewDate requirementsAccess', 'review')
     strings(d.get('editorial'), 'reason status', 'editorial')
     value = d['editorial'].get('score')
     require(value is None or number(value) and 0 <= value <= 10, 'editorial.score must be null or 0–10')

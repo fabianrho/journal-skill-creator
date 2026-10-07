@@ -16,6 +16,7 @@ The script reads `assets/review/dashboard-template.html`, validates required fie
 |---|---|
 | `reviewId` | Unique review/version identifier, used to restore compatible selection state. |
 | `title`, `journal`, `articleType`, `scope`, `version`, `reviewDate` | Explicit identity and reviewed scope; date in YYYY-MM-DD. |
+| `requirementsAccess` | Where the journal rules came from and when, shown in the header, e.g. `Requirements accessed 2026-10-07 (bundled)` or `Requirements accessed 2026-11-02 (refreshed this session)`. Use the oldest access date among the captures relied on. |
 | `editorial` | `{score, reason, status}`. Score is a separate qualitative 0–10 assessment or `null` with a reason. Status keeps scientific blockers and incomplete review visible. |
 | `length` | `{count, limit, limitStatus, scope, exclusions, source, method}`. Count is a measured nonnegative integer or `null`. Limit is a verified positive integer or `null`. `limitStatus` is `verified`, `unverified` or `none`. State the applicable source/section, counting method and exclusions. No known count means no progress indicator. |
 | `focus` | `{ids, action, status, workType}`. Ordered array of priority paragraph IDs from `paragraphs`; first ID is initially selected. Use an empty array only when no material revision is identified, and explain the scope. |
@@ -23,7 +24,7 @@ The script reads `assets/review/dashboard-template.html`, validates required fie
 | `actions` | Prioritized array of `{title, location, workType, action, completeWhen, evidenceBoundary}`. The fixed labels in the Actions tab are Action, Complete when, Evidence boundary. |
 | `coverage` | Array of `[label, text]` pairs covering assessed material, evidence scope, unavailable material, interpretation and preserved boundaries as applicable. |
 | `checks` | Array of `{check, observed, status}` for section limits and cross-section consistency. Use explicit unchecked status when necessary. |
-| `sources` | Array of `{id, basis, title, url, location, access, limitations}`. URL is an inspected http(s) link or `null`; location identifies source file/sections; access identifies date and checked/unavailable status. Preserve requirement/recommendation/observed-style/editorial-judgement/study-evidence distinctions. Every cited short source ID must resolve here. |
+| `sources` | Array of `{id, basis, title, url, location, access, limitations}`. URL is an inspected http(s) link or `null`; location identifies the local capture file and sections; access identifies date and checked/unavailable status. Preserve requirement/recommendation/observed-style/editorial-judgement/study-evidence distinctions. Every cited short source ID must resolve here. |
 
 ## Paragraph object
 
@@ -32,7 +33,7 @@ The script reads `assets/review/dashboard-template.html`, validates required fie
 - `reasons`: object with `C`, `E`, `J`, `F`, `L` strings. Explain each rating, every unknown/exclusion, and why a higher anchor is not met. Include the basis and source IDs/location. Full credit requires positive assessment against the scientific checks; it is not an automatic default.
 - `action`, `workType`, `evidenceNeeded`, `improveWhen`: smallest useful action, type of work, material needed and conditions for reassessment. Identify prose, source, record or analysis work. Do not promise score gains.
 - `blocker`: optional string describing a demonstrated blocker, otherwise empty/omitted. Missing access alone is not a blocker.
-- `provisional`: optional string explaining incomplete current-rule or contextual verification even when all numeric ratings are available, otherwise empty/omitted. This keeps the verdict provisional for snapshot-based J ratings where current guidance was not checked.
+- `provisional`: optional string explaining incomplete contextual verification, or a relevant rule genuinely missing from the bundled captures, even when all numeric ratings are available; otherwise empty/omitted. Bundled dated rules count as verified and do not make a paragraph provisional.
 
 All required text fields must explain their state. Use explicit “None within this scope”, “Not checked” or “Unavailable” with the relevant explanation instead of a blank. Unknown and unavailable material must not be filled with invented facts. An entirely unassessed paragraph displays Not assessed and 0% coverage; N/A weights are excluded, U weights retained. Empty action/check lists display explicit scope statements, so only leave them empty after assessment supports that state.
 

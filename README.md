@@ -50,12 +50,13 @@ Provide dashboards as standalone HTML files or HTML artifacts when supported.
 
 ## Capabilities and dependencies
 
-- Current journal research needs web access and access to the relevant sources. Unavailable sources must be recorded; a cached or partial review cannot establish current submission compliance.
+- Creating or refreshing a journal skill needs web access to the official sources. Unavailable sources must be recorded.
+- Generated skills work offline. Each one bundles the official pages in `references/sources/`, verbatim where the publisher's terms allow, with URL, access date, capture method and completeness. The index quotes the original sentence of every limit and mandatory rule. Generated skills use these bundled rules by default and browse only when asked to refresh them. Every output that relies on journal rules states the access date, for example *Requirements accessed 2026-10-07 (bundled)*.
 - The instructions and Markdown review fallback use the shared Agent Skills format. Other agents can read the skill if they support that format and the required research/file tools.
 - A separate skill-creator helper is optional. The included generated-skill contract specifies the required output resources; the entrypoint makes helper validation conditional on availability.
 - `agents/openai.yaml` provides optional Codex UI metadata.
 - The dashboard renderer uses Python 3 and its standard library. It produces a complete HTML file with bundled CSS and tab controls, usable offline in a browser. Claude can deliver the file or display it as an HTML artifact where supported. Optional OpenAI selection-state integration is not required. Browser behavior is tested; execution inside Claude itself has not been tested.
-- This package creates journal skills. Journal rules are researched when it runs; it does not bundle a verified rule set for every journal.
+- This package creates journal skills. Journal rules are researched when it runs; the creator itself does not bundle a rule set for every journal.
 
 ## Package contents
 

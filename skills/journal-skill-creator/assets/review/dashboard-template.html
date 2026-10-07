@@ -81,7 +81,7 @@ function calc(u){let earned=0,unknown=0,applicable=0;u.r.forEach((v,i)=>{if(v===
 function score(u){const s=calc(u);return !s.assessed?'Not assessed':s.unknown?`${s.low.toFixed(1)}–${s.high.toFixed(1)}`:s.low.toFixed(1);}
 function verdict(u){const s=calc(u),incomplete=Boolean(s.unknown||u.provisional);if(u.blocker)return incomplete?'Blocked; assessment incomplete':'Blocked';if(!s.assessed)return 'Not assessed';if(incomplete)return 'Provisional';return s.low>=9?'Ready within assessed scope':s.low>=7.5?'Minor revision':s.low>=5?'Substantive revision':'Major revision';}
 const tenBar=(v,label)=>`<div class="ten-bar" role="img" aria-label="${esc(label)}">${Array.from({length:10},(_,i)=>`<span><i style="width:${Math.min(1,Math.max(0,v-i))*100}%"></i></span>`).join('')}</div>`;
-document.title=data.title;put('title',esc(data.title));put('meta',esc([data.journal,data.articleType,data.scope,data.version,data.reviewDate].join(' · ')));
+document.title=data.title;put('title',esc(data.title));put('meta',esc([data.journal,data.articleType,data.scope,data.version,data.reviewDate,data.requirementsAccess].join(' · ')));
 const ed=data.editorial,len=data.length,focus=data.focus;
 const measured=typeof len.count==='number', verified=len.limitStatus==='verified'&&typeof len.limit==='number'&&len.limit>0;
 const comparable=measured&&verified,percent=comparable?100*len.count/len.limit:null;
