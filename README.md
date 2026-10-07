@@ -1,4 +1,4 @@
-![Journal Skill Creator — Journal guidelines. Reusable writing skills.](docs/assets/banner.png)
+![Journal Skill Creator — Journal guidelines. Reusable writing skills.](docs/assets/banner.gif)
 
 # Journal Skill Creator
 
