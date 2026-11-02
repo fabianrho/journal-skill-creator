@@ -4,6 +4,10 @@ Create a reusable writing and manuscript-review skill for any academic journal, 
 
 The creator produces a separate journal skill with sources, article-type requirements, writing guidance, a scientific review rubric, paragraph scores and a review dashboard. It distinguishes explicit journal rules from conventions, records unavailable evidence and avoids invented study results or citations.
 
+## Demo
+
+[▶ Watch the demo video](docs/assets/journal-skill-demo.mp4) (MP4, 23 MB)
+
 ## Install
 
 Download this repository using GitHub's **Code → Download ZIP**, then extract it. The skill folder is `skills/journal-skill-creator`; copy the entire folder, including its supporting files.
