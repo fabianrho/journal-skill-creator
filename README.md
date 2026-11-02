@@ -6,7 +6,7 @@ The creator produces a separate journal skill with sources, article-type require
 
 ## Demo
 
-[▶ Watch the demo video](docs/assets/journal-skill-demo.mp4) (MP4, 23 MB)
+[▶ Watch the demo video](docs/assets/journal-skill-demo.mp4) (MP4, 8 MB)
 
 ## Install
 
