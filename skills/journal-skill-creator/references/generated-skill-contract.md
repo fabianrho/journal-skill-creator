@@ -17,7 +17,7 @@ The body should support these stages:
 
 Require reading the existing text and the applicable source sections before substantive work. Link the source index, writing-style reference, scoring rubric, and dashboard guidance below with clear reading conditions. Full-manuscript and submission audits must cover the complete applicable official reading set, including linked policies and required templates, and map requirements to manuscript locations or unresolved items. An index is a routing aid, not a substitute for the full instructions; the local captures in `references/sources/` are the full instructions.
 
-Use the bundled requirements by default for every task, including new manuscripts, audits and readiness claims; the skill must work fully without web access. Browse the official sources only when the user asks (for example, "refresh the requirements"); then update the affected captures, their access dates and the index together, and report material changes. Bundled, dated rules count as verified. Reserve "provisional" and "unverified" for rules that are genuinely missing from the captures, inaccessible at creation, or unresolved conflicts.
+Use the bundled requirements by default for every task, including new manuscripts, audits and readiness claims; the skill must work fully without web access. Browse the official sources only when the user asks (for example, "refresh the requirements"); then update the affected captures, their access dates and the index together, and report material changes. Bundled, dated rules count as verified. Reserve "provisional" and "unverified" for rules that are genuinely missing from the captures, sources the user chose to proceed without at creation, or unresolved conflicts.
 
 Every output that relies on journal rules states where they came from and when, for example *Requirements accessed 2026-10-07 (bundled)* or *Requirements accessed 2026-11-02 (refreshed this session)*. This covers drafts, narrow checks, reviews, audits, text scorecards and the dashboard header. Use the oldest access date among the captures actually relied on when they differ.
 
@@ -38,7 +38,7 @@ Summarize actionable rules in a compact table or equivalent structure. Every lim
 
 Use the journal's exact article-type names and distinguish initial submission, revision, and acceptance requirements. For limits, retain what counts and what is excluded. Cover the applicable abstract/main-text structure, word and reference limits, keywords, highlights or equivalent, figures/tables, file formats, blinding, language/statistical style, reporting standards, and declarations. Do not populate unknowns with customary limits from other journals.
 
-List unresolved contradictions and inaccessible dependencies with their practical consequence. Distinguish a source not checked, a rule not located in inspected material, and a rule explicitly stated not to apply. Include official templates and external reporting-policy links when needed, with their own checked/unchecked status. Date local captures; do not claim they are complete when only selected sections were retained.
+List unresolved contradictions with their practical consequence, and any source the user chose to proceed without, marked **Not obtained (user chose to proceed)** with its link. Record which captures were user-supplied. Distinguish a source not checked, a rule not located in inspected material, and a rule explicitly stated not to apply. Include official templates and external reporting-policy links when needed, with their own checked/unchecked status. Date local captures; do not claim they are complete when only selected sections were retained.
 
 ## Source captures: references/sources/
 
@@ -50,7 +50,7 @@ title: <page title as published>
 url: <official URL>
 accessed: <YYYY-MM-DD>
 capture: <verbatim | verbatim extracts | non-verbatim (reason)>
-method: <how captured, e.g. fetched HTML converted to Markdown; PDF text extraction>
+method: <how captured, e.g. fetched HTML converted to Markdown; PDF text extraction; user-supplied PDF, received YYYY-MM-DD>
 completeness: <complete | partial: sections retained and omitted>
 reuse: <publisher's reuse terms for this page, or "not stated">
 ---
@@ -101,9 +101,9 @@ Check that a resulting skill can handle:
 - A request to refresh the requirements browses the official sources, updates captures, dates and index, and reports what changed.
 - A results paragraph with a missing denominator or unsupported effect estimate without filling in the missing science.
 - A review article when the default is original research: retrieve the relevant rules before applying structure or limits.
-- An author asking for submission clearance despite an inaccessible mandatory template or conflicting limits: identify the precise gap and qualify readiness.
+- An author asking for submission clearance despite a mandatory template that was not obtained, or conflicting limits: identify the precise gap, give its link, and qualify readiness.
 
-For a refresh, reconcile changed official guidance, replace the affected captures and their access dates, and retain user-authored preferences where compatible. Report material changes and keep the earlier date on any source that could not be reverified.
+For a refresh, reconcile changed official guidance, replace the affected captures and their access dates, and retain user-authored preferences where compatible. If any source cannot be read during the refresh, stop before changing files. Give the user its title, exact link, what it covers and why it failed, and ask for the file or page text, as at creation. Keep the existing capture and its earlier date until the user supplies the source or explicitly chooses to keep the old version. Report material changes.
 
 ## Portable dashboard delivery
 

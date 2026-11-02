@@ -23,7 +23,7 @@ Example:
 ```text
 Use $journal-skill-creator to create a writing skill for European Radiology,
 focusing on Original Research. Research the current official author instructions
-and record inaccessible sources or unresolved requirements.
+and ask me for any source you cannot open.
 ```
 
 ### Claude Code
@@ -50,7 +50,7 @@ Provide dashboards as standalone HTML files or HTML artifacts when supported.
 
 ## Capabilities and dependencies
 
-- Creating or refreshing a journal skill needs web access to the official sources. Unavailable sources must be recorded.
+- Creating or refreshing a journal skill needs web access to the official sources. If a source is behind a paywall or login, or cannot be downloaded, Claude stops and lists each one with its link. You supply it as a PDF, file or pasted text. The skill is only created once every required source has been read.
 - Generated skills work offline. Each one bundles the official pages in `references/sources/`, verbatim where the publisher's terms allow, with URL, access date, capture method and completeness. The index quotes the original sentence of every limit and mandatory rule. Generated skills use these bundled rules by default and browse only when asked to refresh them. Every output that relies on journal rules states the access date, for example *Requirements accessed 2026-10-07 (bundled)*.
 - The instructions and Markdown review fallback use the shared Agent Skills format. Other agents can read the skill if they support that format and the required research/file tools.
 - A separate skill-creator helper is optional. The included generated-skill contract specifies the required output resources; the entrypoint makes helper validation conditional on availability.
