@@ -2,13 +2,13 @@
 
 Read the local critical-review and paragraph-readiness references before assigning ratings. The HTML asset is the approved presentation shell; the assessment JSON contains manuscript-specific content only. Use plain text in every field. Do not insert HTML into the data or copy example paper findings into a new review.
 
-Generate the standalone HTML file with the bundled script (replace paths with the actual skill, JSON and authorized output paths):
+Generate the standalone HTML file and its annotated PDF with the bundled script (replace paths with the actual skill, JSON and authorized output paths):
 
 ```sh
 python3 <skill-directory>/scripts/render_review_dashboard.py <assessment.json> <review-dashboard.html>
 ```
 
-The script reads `assets/review/dashboard-template.html`, validates required fields and safely embeds the data. It does not assign ratings, verify sources, infer limits or rewrite the manuscript. The output bundles its CSS and tab controls and opens directly in a browser without network access or a host runtime. In Claude, present it as an HTML artifact when supported, or provide the HTML file for download. In Codex, open it in the available browser preview; adapt it to an inline surface only when that surface requires a fragment. Optional OpenAI state APIs are not required for interaction. Keep the template and renderer together when installing or sharing this skill.
+The script reads `assets/review/dashboard-template.html`, validates required fields and safely embeds the data. It also writes `<name>-annotated.pdf` beside the HTML file and embeds the same PDF for the dashboard's **Export annotated PDF** button. It prints both paths and warns about any character the PDF fonts cannot draw; such characters appear as "?" in the PDF text, while comments keep the original. Same input gives byte-identical output. It does not assign ratings, verify sources, infer limits or rewrite the manuscript. The output bundles its CSS and tab controls and opens directly in a browser without network access or a host runtime. In Claude, present it as an HTML artifact when supported, or provide the HTML file for download. In Codex, open it in the available browser preview; adapt it to an inline surface only when that surface requires a fragment. Optional OpenAI state APIs are not required for interaction. Keep the template and renderer together when installing or sharing this skill.
 
 ## Root object
 
@@ -28,10 +28,11 @@ The script reads `assets/review/dashboard-template.html`, validates required fie
 
 ## Paragraph object
 
-- `id`, `section`, `location`, `opening`, `purpose`: stable label, actual section name, manuscript pointer, short opening phrase and paragraph role. `All paragraphs` is reserved for the combined view.
+- `id`, `section`, `sectionCode`, `location`, `opening`, `purpose`: stable label, actual section name, its fixed section code, manuscript pointer, short opening phrase and paragraph role. Take the code from the section-code table in the local paragraph-readiness reference; the ID is that code, a space, then P and the paragraph's number in its section (`R P2`, `SRS P3`). Each section has one code, and no two sections share one. The section selector shows `R · Results` and `SRS · Segmentation Reference Standard`. `All paragraphs` is reserved for the combined view.
 - `r`: exactly five ratings in C/E/J/F/L order; each is an integer 0–4, `"U"` or `"N/A"`. The renderer computes totals and coverage; do not supply a manual score.
 - `reasons`: object with `C`, `E`, `J`, `F`, `L` strings. Explain each rating, every unknown/exclusion, and why a higher anchor is not met. Include the basis and source IDs/location. Full credit requires positive assessment against the scientific checks; it is not an automatic default.
 - `action`, `workType`, `evidenceNeeded`, `improveWhen`: smallest useful action, type of work, material needed and conditions for reassessment. Identify prose, source, record or analysis work. Do not promise score gains.
+- `segments`: the paragraph's full text as ordered highlighted spans, following **Sentence highlights** in the local paragraph-readiness reference. Each span is `{text, rating, dims, comment, suggestion}`: verbatim text; rating as an integer 0–4 or `"U"`; dims as an array of C/E/J/F/L letters, empty only for rating 4; a comment for every span; an optional suggested replacement. Concatenated span texts must reproduce the paragraph and start with `opening`. The renderer rejects spans rated below the cited paragraph dimensions, sub-4 or U dimensions with no citing span, and spans that cite an N/A dimension.
 - `blocker`: optional string describing a demonstrated blocker, otherwise empty/omitted. Missing access alone is not a blocker.
 - `provisional`: optional string explaining incomplete contextual verification, or a relevant rule genuinely missing from the bundled captures, even when all numeric ratings are available; otherwise empty/omitted. Bundled dated rules count as verified and do not make a paragraph provisional.
 
@@ -39,4 +40,4 @@ All required text fields must explain their state. Use explicit “None within t
 
 ## Delivery check
 
-Check exactly three overview cards and the Paragraphs / Actions / Sources tabs, selection and disclosures, source pointers, and the numeric outputs against the local rubric. Test 736px and 320px widths and light/dark appearance. The initial detail should match the focus; tab changes retain the overview cards. When maintaining the template, test complete scores, U intervals, N/A normalization, all-U/no-assessable cases, a demonstrated blocker, numeric-but-provisional ratings and an unverified word limit. Do not deliver synthetic calibration data as a manuscript review.
+Check exactly three overview cards and the Paragraphs / Actions / Sources tabs, selection and disclosures, source pointers, and the numeric outputs against the local rubric. Confirm the section selector shows codes, a click anywhere on a row selects it, the Sentence highlights panel matches the paragraph, and the Export button downloads the PDF. Open the PDF and confirm one highlight per span (a span that crosses a page break gets one per page), one margin note per paragraph, and readable comments. Test 736px and 320px widths and light/dark appearance. The initial detail should match the focus; tab changes retain the overview cards. When maintaining the template, test complete scores, U intervals, N/A normalization, all-U/no-assessable cases, a demonstrated blocker, numeric-but-provisional ratings and an unverified word limit. Do not deliver synthetic calibration data as a manuscript review.

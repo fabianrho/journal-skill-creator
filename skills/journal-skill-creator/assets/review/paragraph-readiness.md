@@ -8,7 +8,23 @@ Read [critical-review.md](critical-review.md) before assigning scores. Version 1
 
 Identify the article type, manuscript version, section, and available study evidence. Use the default article type declared in SKILL.md only when unspecified. Read the applicable official sections in their local captures through [journal-requirements.md](journal-requirements.md) and consult [writing-style.md](writing-style.md). The bundled captures are the default basis, including for readiness checks; browse only when the user asks to refresh the requirements. State the requirements access date in every review and scorecard. Other article types retain the scoring dimensions but use their own requirements and comparable published articles.
 
-Assign stable IDs such as Introduction P1 or Methods P3, with a short opening phrase and file/page/line location where available. Preserve paragraph boundaries; score abstract subsections and individual key points as labelled units. Read neighbouring paragraphs when available. Do not penalize a paragraph for information appropriately supplied elsewhere, or claim that an unseen section is missing. Apply opening-sentence requirements only to section openings. Track section word limits and manuscript-wide obligations once in a separate checklist.
+Assign stable IDs written as the section code, a space, then P and the paragraph's position in that section, counted from 1 in manuscript order: `I P1`, `I P2`, `M P1`, `SRS P3`. Give each with a short opening phrase and file/page/line location where available. Preserve paragraph boundaries; score abstract subsections and individual key points as labelled units (`A P1` for the first abstract subsection, `K P2` for the second key point).
+
+Section codes are fixed so every review labels sections the same way:
+
+| Manuscript section heading (keep its actual name) | Code |
+|---|---|
+| Abstract, including its labelled subsections | A |
+| Key Points, Key Results, Highlights | K |
+| Introduction | I |
+| Methods, Materials and Methods | M |
+| Results | R |
+| Discussion | D |
+| Any other heading | Initials of its main words, in capitals, at most three |
+
+Use a single letter only when the heading is literally one of the standard sections listed. For every other heading, take the first letter of each main word, skipping short function words (and, of, the, for, in, on, to, with, a, an); keep the first three if there are more. A heading with only one main word takes its first two letters. Examples: Background and Objective BO, Primary Endpoint PE, Secondary Endpoints SE, Summary of Analyses and Metrics SAM, Sample Size and Statistical Power SSP, Study Population SP, Segmentation Reference Standard SRS, Data Availability DA, Summary Statement SS, Conclusion CO, Limitations LI.
+
+If two sections in one review would share a code, keep it for the earlier section and extend the later one with the next letter of its last main word (a second "Study Protocol" after Study Population becomes SPR); repeat until unique, staying within three letters where possible. Never use C, E, J, F or L alone: they name the rubric dimensions. Keep a section's code for every paragraph in it and across follow-up reviews. When a follow-up converts an earlier review with other ID styles, list the old-to-new ID mapping once. Read neighbouring paragraphs when available. Do not penalize a paragraph for information appropriately supplied elsewhere, or claim that an unseen section is missing. Apply opening-sentence requirements only to section openings. Track section word limits and manuscript-wide obligations once in a separate checklist.
 
 For every judgement identify its basis:
 
@@ -49,6 +65,18 @@ Readiness bands for fully assessed paragraphs:
 | 0.0–4.9 | 0–49 | Major revision |
 
 The numeric band never overrides a **blocker**: a demonstrated central unsupported inference, contradiction, unresolved placeholder, or mandatory paragraph requirement violation. Show the score but label the verdict **Blocked**, with the exact reason. Missing evidence access or a rule genuinely missing from the bundled captures instead makes the verdict **Provisional**; if a demonstrated blocker also exists, show **Blocked; assessment incomplete**. Even 10.0/10 does not certify the manuscript or predict acceptance.
+
+## Sentence highlights
+
+Every scored paragraph also carries its full text as an ordered list of highlighted spans. The spans drive the dashboard's **Sentence highlights** panel and the annotated PDF. They locate the reasons for the paragraph ratings; they never replace or change those ratings.
+
+1. **Text.** Copy the paragraph verbatim. Concatenating the spans in order must reproduce it exactly, starting with the recorded opening phrase. Keep the space between two sentences at the end of the earlier span. Do not correct, shorten or reword the text inside a span; corrections belong in the suggestion.
+2. **Boundaries.** One span per sentence by default. Split a sentence only when a specific word or phrase carries an issue: that word or phrase becomes its own span, and the text before and after it becomes separate spans rated on their own merits. Never merge two sentences into one span. Treat abbreviations, decimals, "et al." and citations as part of their sentence.
+3. **Rating.** Rate each span with the rubric's 0–4 anchors, applied to the most serious issue inside that span: 4 no material issue, 3 minor, 2 substantive, 1 major, 0 fails or directly contradicted. Use **U** when the span's claim cannot be checked against the available evidence or captures. There is no N/A span.
+4. **Dimensions.** A span rated 4 names no dimensions. Any other span lists every dimension letter (C, E, J, F, L) its issue concerns, most serious first. A span may not be rated below the lowest paragraph rating among the dimensions it cites, because the paragraph rating already reflects its worst span. Every paragraph dimension rated 0–3 needs at least one span citing it, and every U dimension needs at least one U span citing it.
+5. **Issues without their own text.** A missing element is attached to the sentence after which it belongs, with a comment beginning "Missing:". An ordering or paragraph-wide issue is attached to the first sentence it affects, with a comment beginning "Paragraph:".
+6. **Comment.** Every span has a comment, including green ones. Rated 4: one short clause on what works ("States design, dates and consecutive sampling."). Below 4 or U: the problem and its consequence in at most two sentences, with source IDs where a rule or record applies. Use the same findings as the paragraph's reasons; do not raise new issues only here.
+7. **Suggestion.** Optional. Provide replacement wording for the span only when a prose change alone resolves the issue. Use bracketed placeholders such as [n/N] or [ref] for anything the manuscript does not supply; never invent results or citations. Omit it when the fix needs evidence, analysis or author input, and say what is needed in the comment instead.
 
 ## Presentation
 

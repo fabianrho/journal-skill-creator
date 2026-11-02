@@ -55,7 +55,7 @@ Provide dashboards as standalone HTML files or HTML artifacts when supported.
 - The instructions and Markdown review fallback use the shared Agent Skills format. Other agents can read the skill if they support that format and the required research/file tools.
 - A separate skill-creator helper is optional. The included generated-skill contract specifies the required output resources; the entrypoint makes helper validation conditional on availability.
 - `agents/openai.yaml` provides optional Codex UI metadata.
-- The dashboard renderer uses Python 3 and its standard library. It produces a complete HTML file with bundled CSS and tab controls, usable offline in a browser. Claude can deliver the file or display it as an HTML artifact where supported. Optional OpenAI selection-state integration is not required. Browser behavior is tested; execution inside Claude itself has not been tested.
+- The dashboard renderer uses Python 3 and its standard library. It produces a complete HTML file with bundled CSS and tab controls, usable offline in a browser, and an annotated PDF. In the PDF each sentence or flagged phrase is highlighted from green to red, with a PDF comment explaining its rating. The dashboard's **Export annotated PDF** button downloads the same file. Claude can deliver the file or display it as an HTML artifact where supported. Optional OpenAI selection-state integration is not required. Browser behavior is tested; execution inside Claude itself has not been tested.
 - This package creates journal skills. Journal rules are researched when it runs; the creator itself does not bundle a rule set for every journal.
 
 ## Package contents
