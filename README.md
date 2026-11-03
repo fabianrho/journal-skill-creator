@@ -18,7 +18,7 @@ Name a journal and an article type. The creator researches the journal's officia
 
 ## Demo
 
-https://github.com/user-attachments/assets/f507f3b8-c58f-4f60-95bd-220daa10e049
+https://github.com/user-attachments/assets/e0615c82-9ea5-43b3-ac52-7afcbb12020f
 
 ## How it works
 
