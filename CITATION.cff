@@ -9,6 +9,7 @@ authors:
   - family-names: Coelho
     given-names: Tiago
 version: 0.1.0
+doi: 10.5281/zenodo.23914245
 license: MIT
 repository-code: "https://github.com/fabianrho/journal-skill-creator"
 keywords:

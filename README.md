@@ -1,6 +1,7 @@
 ![Journal Skill Creator — Journal guidelines. Reusable writing skills.](docs/assets/banner.gif)
 
 <p align="center">
+  <a href="https://doi.org/10.5281/zenodo.23914245"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.23914245.svg"></a>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
   <a href="https://agentskills.io/specification"><img alt="Agent Skills format" src="https://img.shields.io/badge/format-Agent%20Skills-6f42c1.svg"></a>
   <img alt="Works with Claude Code, Claude Desktop and Codex" src="https://img.shields.io/badge/works%20with-Claude%20%7C%20Codex-orange.svg">
@@ -114,7 +115,11 @@ Some links in the review templates point to `journal-requirements.md` and `writi
 
 ## Citation
 
-If this tool supports your work, please cite it using the metadata in [CITATION.cff](CITATION.cff), or use GitHub's **Cite this repository** button.
+If this tool supports your work, please cite it:
+
+> Hoitsma F, Coelho T. Journal Skill Creator [software]. Zenodo. https://doi.org/10.5281/zenodo.23914245
+
+This DOI always resolves to the latest version. Version-specific DOIs and other formats (BibTeX, APA) are available on the [Zenodo record](https://doi.org/10.5281/zenodo.23914245) and through GitHub's **Cite this repository** button.
 
 ## Contributing
 
